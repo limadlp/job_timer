@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:job_time/app/entities/project.dart';
-import 'package:job_time/app/entities/project_status.dart';
-import '../../core/database/database.dart';
+import 'package:job_time/app/modules/home/widgets/header_projects_menu.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,17 +7,39 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
+      drawer: const Drawer(
+        child: SafeArea(
+            child: ListTile(
+          title: Text('Sair'),
+        )),
       ),
-      body: Column(
-        children: [
-          Container(),
-          ElevatedButton(
-            onPressed: () async {},
-            child: const Text('Cadastrar'),
-          ),
-        ],
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            const SliverAppBar(
+              title: Text('Projetos'),
+              expandedHeight: 100,
+              toolbarHeight: 100,
+              centerTitle: true,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(15),
+                ),
+              ),
+            ),
+            SliverPersistentHeader(
+              delegate: HeaderProjectsMenu(),
+              pinned: true,
+            ),
+            SliverToBoxAdapter(
+              child: Container(
+                color: Colors.blue,
+                height: 200,
+              ),
+            ),
+            //SliverList(delegate: SliverChildListDelegate(addAutomaticKeepAlives: ))
+          ],
+        ),
       ),
     );
   }
